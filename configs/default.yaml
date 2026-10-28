@@ -1,0 +1,29 @@
+# Every model, split, horizon and rule below was fixed before results were examined.
+out_dir: reports
+prices: data/raw/stock_prices.parquet
+vix: data/raw/vix-daily.csv
+symbol: SPY
+start: "1996-02-01"
+end: "2026-09-22"            # last common date of SPY and VIX files
+
+horizon: 22                  # forecast target: average daily variance over the next 22 trading days (one month)
+first_test_year: 2008        # walk-forward: refit each January on all data before it, test the full year
+embargo: 22                  # drop the last 22 training days so no training target overlaps the test year
+seq_len: 60                  # trading days of history fed to the sequence models
+seed: 7
+seeds_nn: [7, 11, 23]        # sequence models are averaged over three seeds
+
+lgbm: {learning_rate: 0.03, num_leaves: 15, min_child_samples: 50, n_estimators: 400, feature_fraction: 0.8, bagging_fraction: 0.8, bagging_freq: 1}
+lstm: {hidden: 32, layers: 1, dropout: 0.1, epochs: 30, lr: 0.002, batch: 128, weight_decay: 1.0e-5}
+tcn:  {channels: 32, levels: 4, kernel: 3, dropout: 0.1, epochs: 30, lr: 0.002, batch: 128, weight_decay: 1.0e-5}
+
+vol_target:                  # business test: hold SPY sized to a 15% volatility target using each forecast
+  target: 0.15
+  max_leverage: 2.0
+  rebalance_days: 5          # weekly rebalance
+  cost_bps: 2                # per unit of turnover
+var_level: 0.99              # 1-day value-at-risk coverage test
+
+sources:
+  stock_prices.parquet: {url: https://huggingface.co/datasets/defeatbeta/yahoo-finance-data/resolve/main/data/US/stock_prices.parquet, sha256: 903dbb965979f8b92a60b01524372f42be0e4bf88c291caf87171a286149be32}
+  vix-daily.csv: {url: https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv, sha256: 570e05630c9a5e7350d0c3dbe3acc58e793cb5248181ab0e949c121cc082fb83}
