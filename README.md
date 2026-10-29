@@ -106,7 +106,7 @@ Methods referenced
 - Christensen, K., Siggaard, M. and Veliyev, B. (2023). "A Machine Learning Approach to Volatility Forecasting." *Journal of Financial Econometrics* 21(5), 1680–1727. [ideas.repec.org/a/oup/jfinec/v21y2023i5p1680-1727..html](https://ideas.repec.org/a/oup/jfinec/v21y2023i5p1680-1727..html)
 - Moreira, A. and Muir, T. (2017). "Volatility-Managed Portfolios." *Journal of Finance* 72(4), 1611–1644. [nber.org/papers/w22208](https://www.nber.org/papers/w22208)
 
-All code, charts and text are the author's own.
+Code, analysis, charts and text were produced with AI assistance (Claude, by Anthropic) and reviewed by Gaurav Gupta.
 
 ## Run it
 
